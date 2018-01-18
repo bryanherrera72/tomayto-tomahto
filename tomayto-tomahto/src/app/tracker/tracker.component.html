@@ -1,0 +1,16 @@
+<div class = "container-fluid panel panel-default">
+    <div id = "timer" class = "row">
+        <h1 class = "col-lg-offset-4">
+            {{displayTimer?.minutes}} m : {{displayTimer?.seconds}} s
+        </h1> 
+    </div>
+    <hr>
+    <div class = "row panel-body"> 
+        <h5 class = "col-lg-6">
+            <!-- Intervals Completed: {{this.intervals}} / {{this.intervalGoal}} -->
+        </h5>
+        <div class = "col-lg-6">
+            <button [ngClass] = "startButtonState()"  (click) = "toggleButtonState()" >{{button_text}}</button>
+        </div> 
+    </div>
+</div>
