@@ -3,6 +3,7 @@ import { Timer } from '../../models/Timer';
 
 @Injectable()
 export class SettingsService {
+  workInterval: boolean = true;
   // start with the default timer
   timer:Timer = {
     minutes: 25,
@@ -16,5 +17,10 @@ export class SettingsService {
   getTimerProperties(){
     return this.timer;
   }
-  
+  setIsWorkInterval(value: boolean){
+    this.workInterval = value;
+  }
+  isWorkInterval(){
+    return this.workInterval;
+  }
 }

@@ -1,8 +1,13 @@
 <div class = "container-fluid panel panel-default">
     <div id = "timer" class = "row">
-        <h1 class = "col-lg-offset-4">
+        <!-- display the regular timer  -->
+        <h1 class = "col-lg-offset-4" *ngIf="isWorkInterval; else elseBlock">
             {{displayTimer?.minutes}} m : {{displayTimer?.seconds}} s
         </h1> 
+        <!-- display the rest timer  -->
+        <ng-template #elseBlock>
+            {{displayTimer?.rest_minutes}} m : {{displayTimer?.rest_seconds}} s
+        </ng-template>
     </div>
     <hr>
     <div class = "row panel-body"> 

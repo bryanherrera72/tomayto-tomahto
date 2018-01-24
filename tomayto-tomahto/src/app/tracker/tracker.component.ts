@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2} from '@angular/core';
 import { TimerService } from '../services/timer/timer.service';
-import { Timer } from '../models/timer';
+import { Timer } from '../models/Timer';
 import { IntervalService } from '../services/interval/interval.service';
 import { TrackerService } from '../services/tracker/tracker.service';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 
 /*
@@ -17,16 +19,29 @@ Component keeps track of time per interval and number of intervals
 export class TrackerComponent implements OnInit{
   // boolean states whether the button has been clicked once
   hasBeenClicked: boolean = false;
-
-  displayTimer:Timer = {minutes:0, seconds:0, rest_minutes:0, rest_seconds:0};
+  displayTimer:Timer = new Timer(25,0,5,0);
   //boolean states when the timer is running.
   isTiming:boolean = true;
   button_text: string = 'Start';
+
+  isWorkInterval:boolean = true;
   constructor(private timerService: TimerService,
-              private trackerService: TrackerService) { }
+              private trackerService: TrackerService) { 
+
+              }
 
   ngOnInit() {
-    
+    this.timerService.initSubject();
+    this.trackerService.getTimerSubject().subscribe(
+      (timer: Timer) => {
+        this.displayTimer = timer;
+      }
+    );
+    this.timerService.intervalTypeChange.subscribe(
+      (type:boolean)=>{
+        this.isWorkInterval = type;
+      }
+    );
   }
   
   startButtonState(){

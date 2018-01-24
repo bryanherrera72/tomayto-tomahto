@@ -5,19 +5,45 @@ import { AlertService } from '../alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 
-@Injectable()
 export class TimerService {
   
   timer:Timer;
 
-  timerObs: Observable<Timer>;
+  timerSubj: Subject<Timer> =new Subject<Timer>();
   
-  constructor() { 
+  isWorkInterval: boolean = true;
 
+  intervalTypeChange: EventEmitter<boolean> = new EventEmitter<boolean>();  
+  constructor() { 
+    
   }
   ngOnInit(){
-    
+    this.initSubject();
+    this.intervalTypeChange.emit(this.isWorkInterval);
+  }
+  
+  initSubject(){
+    this.timerSubj= Observable.create(
+      (observer:Observer<Timer>) => {
+       let tickerId = setInterval(
+         ()=>{
+           if(this.isWorkInterval){
+            this.decrementIntervalTimer();
+            observer.next(this.timer);
+           }
+           else{
+             this.decrementRestTimer();
+             observer.next(this.timer);
+           }
+       },1000);
+ 
+       return () => {
+         clearInterval(tickerId);
+       }
+      }
+     );
   }
   
   setTimer(timer:Timer){
@@ -27,62 +53,19 @@ export class TimerService {
   getTimer(){
     return this.timer;
   }
-  /*
-    startTimer(): Initialize rest or standard timer to start state.
-  */
-  startTimer(): Observable<Timer>{
-    this.timerObs = Observable.create(
-     (observer:Observer<Timer>) => {
-      let tickerId = setInterval(
-        ()=>{
-          this.decrementIntervalTimer();
-          observer.next(this.timer);
-      },1000);
 
-      return () => {
-        clearInterval(tickerId);
-      }
-     }
-    );
-    return this.timerObs;
-  }
-
-  /*
-    resumeTimer(): continue rest or standard timer
-  */
-  resumeTimer(): Observable<Timer>{
-    this.timerObs = Observable.create(
-      (observer:Observer<Timer>)=>{
-        let tickerId = setInterval(
-          ()=>{
-            this.decrementIntervalTimer();
-            observer.next(this.timer);
-        },1000);
-
-        return () => {
-          clearInterval(tickerId);
-        } 
-      }
-     );
-      
-    return this.timerObs;
-  }
   
-  pauseTimer(){
-    
-  }
-
-  resetTimer(){
-   
+  getTimerObs():Observable<Timer>{
+    return this.timerSubj;
   }
 
   /*
     decrementIntervalTimer(): Decrement timer tracking the interval time.
   */
   decrementIntervalTimer(){
-    
     if(this.timer.seconds == 0 && this.timer.minutes ==0){
-      //timer has completed.
+      this.isWorkInterval = false;
+      this.intervalTypeChange.emit(this.isWorkInterval);
     }
     else if(this.timer.seconds == 0){
       this.timer.seconds = 60;
@@ -90,31 +73,27 @@ export class TimerService {
     }
     
     this.timer.seconds --;
-
   
   }
   /*
     decrementRestTimer(): Decrement timer tracking the rest time
   */
   decrementRestTimer(){
-
+    if(this.timer.rest_seconds == 0 && this.timer.rest_minutes ==0){
+      this.isWorkInterval = true;
+      this.intervalTypeChange.emit(this.isWorkInterval);
+    }
+    else if(this.timer.rest_seconds == 0){
+      this.timer.rest_seconds = 60;
+      this.timer.rest_minutes --;
+    }
+    
+    this.timer.rest_seconds --;
   }
   
-
+  setIsWorkInterval(value: boolean){
+    this.isWorkInterval = value;
+  }
   
-  /*
-  MIGHT STILL USE THIS///////////////////////////////////////////////////
-    Sets the timer up to display properly
-  */
-  // private updateDisplayTimer(timer: Timer){
-  //   if(timer.minutes < 10)
-  //     this.displayTimer.minutes = "0" +timer.minutes;
-  //   else
-  //     this.displayTimer.minutes = timer.minutes.toString();
-  //   if(timer.seconds < 10)
-  //     this.displayTimer.seconds = "0" + timer.seconds;
-  //   else
-  //     this.displayTimer.seconds = timer.seconds.toString();
-  // }
   
 }
