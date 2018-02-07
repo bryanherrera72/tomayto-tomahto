@@ -6,7 +6,9 @@
         </h1> 
         <!-- display the rest timer  -->
         <ng-template #elseBlock>
-            {{displayTimer?.rest_minutes}} m : {{displayTimer?.rest_seconds}} s
+            <h1 class = "col-lg-offset-4">
+                {{displayTimer?.rest_minutes}} m : {{displayTimer?.rest_seconds}} s
+            </h1>
         </ng-template>
     </div>
     <hr>

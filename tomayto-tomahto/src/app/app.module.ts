@@ -16,6 +16,7 @@ import { AlertService } from './services/alert/alert.service';
 import {RouterModule, Routes} from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
+import {ReactiveFormsModule} from '@angular/forms';
 const routes: Routes = [
   {path: '' ,component: HomeComponent}, 
   {path: 'about', component: AboutComponent}
@@ -32,7 +33,8 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule, 
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ReactiveFormsModule
   ],
   providers: [SettingsService, IntervalService, TimerService, TrackerService,AlertService],
   bootstrap: [AppComponent]

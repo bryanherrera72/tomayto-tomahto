@@ -36,7 +36,7 @@ export class TrackerService implements OnInit {
       /*
         Here we can find out if the timer is going from rest->work or work->rest
         */
-
+        console.log(type);
        this.isWorkInterval = type;
      }
    );
@@ -56,7 +56,6 @@ export class TrackerService implements OnInit {
       (data:Timer)=>{
         this.displayTimer = data;
         this.timerSubject.next(this.displayTimer);
-        console.log(this.displayTimer);
       }
     );
   }
@@ -70,7 +69,6 @@ export class TrackerService implements OnInit {
       (data:Timer)=>{
         this.displayTimer = data;
         this.timerSubject.next(this.displayTimer);
-        console.log(this.displayTimer);
       }
     );
   }

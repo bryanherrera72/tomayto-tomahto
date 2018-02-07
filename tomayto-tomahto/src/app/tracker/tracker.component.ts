@@ -25,6 +25,7 @@ export class TrackerComponent implements OnInit{
   button_text: string = 'Start';
 
   isWorkInterval:boolean = true;
+  
   constructor(private timerService: TimerService,
               private trackerService: TrackerService) { 
 
@@ -39,6 +40,7 @@ export class TrackerComponent implements OnInit{
     );
     this.timerService.intervalTypeChange.subscribe(
       (type:boolean)=>{
+        console.log(type);
         this.isWorkInterval = type;
       }
     );

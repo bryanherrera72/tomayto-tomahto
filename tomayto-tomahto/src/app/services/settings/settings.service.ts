@@ -6,8 +6,8 @@ export class SettingsService {
   workInterval: boolean = true;
   // start with the default timer
   timer:Timer = {
-    minutes: 25,
-    seconds: 0,
+    minutes: 0,
+    seconds: 5,
     rest_minutes: 5,
     rest_seconds: 0
   };
@@ -22,5 +22,12 @@ export class SettingsService {
   }
   isWorkInterval(){
     return this.workInterval;
+  }
+
+  setWorkInterval(minutes: number){
+    this.timer.minutes = minutes;
+  }
+  setRestInterval(minutes: number){
+    this.timer.rest_minutes = minutes;
   }
 }

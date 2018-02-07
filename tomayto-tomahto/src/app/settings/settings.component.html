@@ -1,4 +1,25 @@
 <div class = "container-fluid panel panel-default">
   <h3>Settings</h3>
   <hr>
+  <div class = "row">
+    <form class = "col-lg-6" [formGroup]= "settingsForm" (ngSubmit) = "onSubmit()">
+      <div class = "form-group">
+        <div>
+          <label for="work-time">Time per work interval (minutes)</label>
+          <input formControlName="workMinutes" id = "work-time" class = "form-control" type = "number">
+
+          <label for="rest-time">Time per rest interval (minutes)</label>
+          <input formControlName="restMinutes" id = "rest-time" class = "form-control" type = "number">
+        </div>
+        <br>
+        <div class="form-check">
+          <input formControlName="muteSound" class="form-check-input" type="checkbox" value="" id="sound-option">
+          <label class="form-check-label" for="sound-option">
+            Mute Alert
+          </label>
+        </div>
+        <button class = "btn btn-primary" type = "submit">Apply</button>
+      </div>
+    </form>
+  </div>
 </div>
