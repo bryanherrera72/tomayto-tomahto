@@ -2,11 +2,14 @@
     <div id = "timer" class = "row">
         <!-- display the regular timer  -->
         <h1 class = "col-lg-offset-4" *ngIf="isWorkInterval; else elseBlock">
-            {{displayTimer?.minutes}} m : {{displayTimer?.seconds}} s
+            {{displayTimer?.minutes | timerDigits}} m : {{displayTimer?.seconds | timerDigits}} s
         </h1> 
+        <span class = "col-lg-offset-4" *ngIf="displayTimer==null" class = 'help-block'>Please enter your settings below</span>
         <!-- display the rest timer  -->
         <ng-template #elseBlock>
-            {{displayTimer?.rest_minutes}} m : {{displayTimer?.rest_seconds}} s
+            <h1 class = "col-lg-offset-4">
+                {{displayTimer?.rest_minutes | timerDigits}} m : {{displayTimer?.rest_seconds | timerDigits}} s
+            </h1>
         </ng-template>
     </div>
     <hr>
