@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl} from '@angular/forms';
 import { SettingsService } from '../services/settings/settings.service';
+import { Subject } from 'rxjs/Subject';
+import { Timer } from '../models/Timer';
 
 /*
   Component for managing application settings like: 
@@ -18,6 +20,7 @@ export class SettingsComponent implements OnInit {
 
   settingsForm: FormGroup;
 
+
   constructor(private settingsService: SettingsService) { }
 
   ngOnInit() {
@@ -30,8 +33,10 @@ export class SettingsComponent implements OnInit {
 
   onSubmit(){
     //check vals. send to tracker component.
-    this.settingsService.setWorkInterval(this.settingsForm.get('workMinutes').value);
-    this.settingsService.setRestInterval(this.settingsForm.get('restMinutes').value);
+    
+    this.settingsService.setWorkIntervalTime(this.settingsForm.get('workMinutes').value);
+    this.settingsService.setRestIntervalTime(this.settingsForm.get('restMinutes').value);
+    
   }
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IntervalService } from '../interval/interval.service';
 import { TimerService } from '../timer/timer.service';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { OnInit, AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { AlertService } from '../alert/alert.service';
 import { SettingsService } from '../settings/settings.service';
 import { Timer } from '../../models/Timer';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
-export class TrackerService implements OnInit {
+export class TrackerService implements OnInit{
   timer:Observable<Timer>;
   displayTimer: Timer;
   timerSubcription: Subscription;
@@ -27,13 +27,14 @@ export class TrackerService implements OnInit {
   }
 
   ngOnInit(){
-   this.timerService.setTimer(this.settingsService.getTimerProperties());
-   this.timerService.setIsWorkInterval(this.settingsService.isWorkInterval());
-   this.displayTimer = this.settingsService.getTimerProperties();
-   this.timerSubject =  new Subject<Timer>();
+    this.timerService.setTimer(this.settingsService.getTimerProperties());
+    this.timerService.setIsWorkInterval(true);
+    this.displayTimer = this.settingsService.getTimerProperties();
+    this.timerSubject =  new Subject<Timer>();
+   
    this.timerService.intervalTypeChange.subscribe(
      (type: boolean)=>{
-      /*
+        /*
         Here we can find out if the timer is going from rest->work or work->rest
         */
         console.log(type);
@@ -42,16 +43,13 @@ export class TrackerService implements OnInit {
    );
   }
 
-  getDisplayTimer(){
-    return this.timerService.getTimer();
-  }
   
   /*
     startTimer(): initializes and starts the timer
   */
   startTimer(){
     this.timerService.setTimer(this.settingsService.getTimerProperties());
-    this.timer = this.timerService.getTimerObs()
+    this.timer = this.timerService.getTimerObs();
     this.timerSubcription = this.timer.subscribe(
       (data:Timer)=>{
         this.displayTimer = data;

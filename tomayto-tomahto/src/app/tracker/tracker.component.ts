@@ -3,7 +3,7 @@ import { TimerService } from '../services/timer/timer.service';
 import { Timer } from '../models/Timer';
 import { IntervalService } from '../services/interval/interval.service';
 import { TrackerService } from '../services/tracker/tracker.service';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AfterViewInit, AfterContentInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
@@ -33,9 +33,16 @@ export class TrackerComponent implements OnInit{
 
   ngOnInit() {
     this.timerService.initSubject();
-    this.trackerService.getTimerSubject().subscribe(
+    
+    this.trackerService.timerSubject.subscribe(
       (timer: Timer) => {
         this.displayTimer = timer;
+      }
+    );
+    this.timerService.settingsUpdateSubj.subscribe(
+      (timer: Timer)=>{
+        this.displayTimer = timer;
+        
       }
     );
     this.timerService.intervalTypeChange.subscribe(
@@ -45,7 +52,6 @@ export class TrackerComponent implements OnInit{
       }
     );
   }
-  
   startButtonState(){
    let button_classes = {
       'btn': true,
