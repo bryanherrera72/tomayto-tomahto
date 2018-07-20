@@ -11,10 +11,11 @@ import { FormArray, FormGroup, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  private task_test = [new Task(false,'Finish Working on clear data items'),
-                    new Task(false,'Check (and respond to all) emails'),
-                    new Task(false,'Finish paper for 424'),
-                    new Task(true, 'Work on project for 482')];
+  private task_test= [];
+  // private task_test = [new Task(false,'Finish Working on clear data items'),
+  //                   new Task(false,'Check (and respond to all) emails'),
+  //                   new Task(false,'Finish paper for 424'),
+  //                   new Task(true, 'Work on project for 482')];
   private tasks:Task[] = [];
   adding: boolean = false;
   taskEntryForm: FormGroup;

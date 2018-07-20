@@ -1,3 +1,9 @@
 #main_content{
     padding-top: 60px;
 }
+
+#full-page{
+    max-height: 413px;
+    max-width:720px;
+}
+
