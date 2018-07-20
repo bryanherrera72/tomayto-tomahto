@@ -4,3 +4,15 @@
 .navbar-default a{
     color: #ffffff;
 }
+
+.navbar .navbar-collapse{
+    float:right;
+    border-top: 0px;
+}
+@media(max-width: 767px){
+    .navbar .navbar-collapse{
+        float:left;
+        border-top: 0px;
+        padding-left: 20px;
+    }
+}

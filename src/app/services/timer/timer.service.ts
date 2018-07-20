@@ -48,6 +48,7 @@ export class TimerService {
 
      this.settingsService.settingsSubject.subscribe(
        (data: Timer)=>{
+         this.setTimer(data)
          this.settingsUpdateSubj.next(data);
        }
      );

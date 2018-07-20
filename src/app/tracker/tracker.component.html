@@ -1,13 +1,13 @@
 <div class = "container-fluid panel panel-default">
     <div id = "timer" class = "row">
         <!-- display the regular timer  -->
-        <h1 class = "col-lg-offset-4" *ngIf="isWorkInterval; else elseBlock">
+        <h1 class = "col-lg-offset-4 col-sm-offset-4 col-xs-offset-3" *ngIf="isWorkInterval; else elseBlock">
             {{displayTimer?.minutes | timerDigits}} m : {{displayTimer?.seconds | timerDigits}} s
         </h1> 
         <span class = "col-lg-offset-4" *ngIf="displayTimer==null" class = 'help-block'>Please enter your settings below</span>
         <!-- display the rest timer  -->
         <ng-template #elseBlock>
-            <h1 class = "col-lg-offset-4">
+            <h1 class = "col-lg-offset-4 col-sm-offset-3 col-xs-offset-2">
                 {{displayTimer?.rest_minutes | timerDigits}} m : {{displayTimer?.rest_seconds | timerDigits}} s
             </h1>
         </ng-template>

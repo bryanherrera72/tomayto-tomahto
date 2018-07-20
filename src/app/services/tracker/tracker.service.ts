@@ -41,6 +41,11 @@ export class TrackerService implements OnInit{
        this.isWorkInterval = type;
      }
    );
+   this.settingsService.settingsSubject.subscribe(
+     (timer:Timer)=>{
+       this.timerSubject.next(timer);
+     }
+   );
   }
 
   
