@@ -1,0 +1,55 @@
+<div class = "panel panel-default">
+  <div class = "container-fluid">
+      <div class = "row center-block panel-heading">
+        <h2>Tasks: </h2>
+      </div>
+      <div class = "row">
+          <hr class = "col-lg-10 col-md-10 col-sm-10 col-xs-9">
+          <button 
+            class = "col-lg-2 col-md-2 col-sm-2 col-xs-3" 
+            id ="add-task" 
+            mat-fab color="accent"
+            (click) = "onClickAddTask()"
+            [disabled] = "adding">
+              <mat-icon>add</mat-icon>
+          </button>
+      </div>
+
+      <form [formGroup]="taskEntryForm" autocomplete="off">
+        <div *ngIf="adding">
+          <input 
+            id='add-task-control' 
+            type = "text" 
+            class = "form-control" 
+            formControlName="addSingleTask"
+            >
+          <button 
+            (click) = "onAddTask()"
+            class = "btn btn-success"
+            [disabled] = "!taskEntryForm.get('addSingleTask').valid"
+            
+            >Add
+          </button>
+          <button (click) = "cancelAdd()" class = "btn btn-danger">Cancel</button>
+        </div>
+        
+      </form>
+      
+      <div class = "panel-body">
+        <form [formGroup] = "taskForm">
+          <div formArrayName="taskSet">
+            <div *ngFor="let task of taskForm.get('taskSet').controls; let i = index">
+              <input (click)="onTaskCheck(i)"  [formControlName] = "i" class="form-check-input" type="checkbox" value="{{tasks[i].complete}}" [id]="i">
+              <label class="form-check-label" [for]="i">
+                <span [ngClass]="strikethrough(i)"  id = "task-item">{{tasks[i].description}} </span>
+              </label>
+              </div>
+          </div>
+        </form>
+        
+        <!-- <ul *ngFor = "let task of tasks">
+          <li>{{task.description}}</li>
+        </ul> -->
+      </div>
+  </div>
+</div>

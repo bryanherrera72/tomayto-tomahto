@@ -1,0 +1,24 @@
+<div class = "container-fluid panel panel-default">
+    <div id = "timer" class = "row">
+        <!-- display the regular timer  -->
+        <h1 class = "col-lg-offset-4 col-md-offset-4 col-sm-offset-4" *ngIf="isWorkInterval; else elseBlock">
+            {{displayTimer?.minutes | timerDigits}} m : {{displayTimer?.seconds | timerDigits}} s
+        </h1> 
+        <span class = "col-lg-offset-4" *ngIf="displayTimer==null" class = 'help-block'>Please enter your settings below</span>
+        <!-- display the rest timer  -->
+        <ng-template #elseBlock>
+            <h1 class = "col-lg-offset-4">
+                {{displayTimer?.rest_minutes | timerDigits}} m : {{displayTimer?.rest_seconds | timerDigits}} s
+            </h1>
+        </ng-template>
+    </div>
+    <hr>
+    <div class = "row panel-body"> 
+        <h5 class = "col-lg-6">
+            <!-- Intervals Completed: {{this.intervals}} / {{this.intervalGoal}} -->
+        </h5>
+        <div class = "col-lg-6">
+            <button [ngClass] = "startButtonState()"  (click) = "toggleButtonState()" >{{button_text}}</button>
+        </div> 
+    </div>
+</div>
