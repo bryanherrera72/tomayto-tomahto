@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2} from '@angular/core';
 import { TimerService } from '../services/timer/timer.service';
 import { Timer } from '../models/Timer';
-import { IntervalService } from '../services/interval/interval.service';
 import { TrackerService } from '../services/tracker/tracker.service';
 import { AfterViewInit, AfterContentInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
@@ -36,6 +35,7 @@ export class TrackerComponent implements OnInit{
     
     this.trackerService.timerSubject.subscribe(
       (timer: Timer) => {
+        console.log(timer);
         this.displayTimer = timer;
       }
     );

@@ -1,7 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Timer } from '../../models/Timer';
 import { SettingsService } from '../settings/settings.service';
-import { AlertService } from '../alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import 'rxjs/Rx';
@@ -13,16 +12,15 @@ export class TimerService {
   timer:Timer;
 
   timerSubj: Subject<Timer> =new Subject<Timer>();
+  isWorkInterval:boolean;
   settingsUpdateSubj: Subject<Timer> = new Subject<Timer>();
-  isWorkInterval: boolean = true;
 
   intervalTypeChange: EventEmitter<boolean> = new EventEmitter<boolean>();  
+  
   constructor(private settingsService:SettingsService) { 
-    
+    this.isWorkInterval = true;
   }
   ngOnInit(){
-    this.intervalTypeChange.emit(this.isWorkInterval);
-    
   }
   
   initSubject(){
@@ -73,8 +71,7 @@ export class TimerService {
   */
   decrementIntervalTimer(){
     if(this.timer.seconds == 0 && this.timer.minutes ==0){
-      this.isWorkInterval = false;
-
+      this.setWorkInterval(false);
       this.setTimer(this.settingsService.getTimerProperties());
       this.intervalTypeChange.emit(this.isWorkInterval);
     }
@@ -82,16 +79,14 @@ export class TimerService {
       this.timer.seconds = 60;
       this.timer.minutes --;
     }
-    
     this.timer.seconds --;
-  
   }
   /*
     decrementRestTimer(): Decrement timer tracking the rest time
   */
   decrementRestTimer(){
     if(this.timer.rest_seconds == 0 && this.timer.rest_minutes ==0){
-      this.isWorkInterval = true;
+      this.setWorkInterval(true);
       this.setTimer(this.settingsService.getTimerProperties());
       this.intervalTypeChange.emit(this.isWorkInterval);
     }
@@ -103,7 +98,11 @@ export class TimerService {
     this.timer.rest_seconds --;
   }
   
-  setIsWorkInterval(value: boolean){
+  /*
+    setWorkInterval
+    @param: value  true = "work interval" false = "rest interval"
+  */
+  setWorkInterval(value: boolean){
     this.isWorkInterval = value;
   }
   

@@ -64,7 +64,6 @@ export class TaskListComponent implements OnInit {
       (<FormArray>this.taskForm.get('taskSet')).get(i + '').setValue(true);
 
     }
-    console.log((<FormArray>this.taskForm.get('taskSet')).get(i + '').value);
   }
 
   strikethrough(i:number){
@@ -86,6 +85,7 @@ export class TaskListComponent implements OnInit {
   cancelAdd(){
     this.adding= false;
   }
+  
   onMarkAsComplete(){
 
   }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { IntervalService } from '../interval/interval.service';
 import { TimerService } from '../timer/timer.service';
 import { OnInit, AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { AlertService } from '../alert/alert.service';
@@ -23,27 +22,26 @@ export class TrackerService implements OnInit{
   constructor(private timerService: TimerService,
               private settingsService: SettingsService){
     
-                
   }
 
   ngOnInit(){
     this.timerService.setTimer(this.settingsService.getTimerProperties());
-    this.timerService.setIsWorkInterval(true);
     this.displayTimer = this.settingsService.getTimerProperties();
     this.timerSubject =  new Subject<Timer>();
    
-   this.timerService.intervalTypeChange.subscribe(
-     (type: boolean)=>{
-        /*
-        Here we can find out if the timer is going from rest->work or work->rest
-        */
-        console.log(type);
-       this.isWorkInterval = type;
-     }
-   );
    this.settingsService.settingsSubject.subscribe(
      (timer:Timer)=>{
        this.timerSubject.next(timer);
+     }
+   );
+   this.timerService.intervalTypeChange.subscribe(
+     (type: boolean) => {
+      if(type)
+        console.log("work interval");
+      else
+        console.log("rest interval");
+        
+        
      }
    );
   }
