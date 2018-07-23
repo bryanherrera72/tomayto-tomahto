@@ -20,8 +20,18 @@ export class TrackerService implements OnInit{
   timerSubject: Subject<Timer> = new Subject<Timer>();
   
   constructor(private timerService: TimerService,
-              private settingsService: SettingsService){
-    
+              private settingsService: SettingsService,
+              private alertService:AlertService){
+    this.timerService.intervalTypeChange.subscribe(
+      (type: boolean) => {
+        console.log(type);
+        //open up possibility for alternate sounds depending on interval
+         if(type)
+           this.alertService.workIntervalComplete();
+         else
+           this.alertService.restIntervalComplete();
+      }
+    );
   }
 
   ngOnInit(){
@@ -34,16 +44,8 @@ export class TrackerService implements OnInit{
        this.timerSubject.next(timer);
      }
    );
-   this.timerService.intervalTypeChange.subscribe(
-     (type: boolean) => {
-      if(type)
-        console.log("work interval");
-      else
-        console.log("rest interval");
-        
-        
-     }
-   );
+   
+  
   }
 
   

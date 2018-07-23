@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import 'rxjs/Rx';
 import { Subject } from 'rxjs/Subject';
+import { IntervalObservable } from '../../../../node_modules/rxjs/observable/IntervalObservable';
 
 @Injectable()
 export class TimerService {
@@ -19,8 +20,10 @@ export class TimerService {
   
   constructor(private settingsService:SettingsService) { 
     this.isWorkInterval = true;
+    this.intervalTypeChange = new EventEmitter<boolean>();
   }
   ngOnInit(){
+
   }
   
   initSubject(){
@@ -72,8 +75,8 @@ export class TimerService {
   decrementIntervalTimer(){
     if(this.timer.seconds == 0 && this.timer.minutes ==0){
       this.setWorkInterval(false);
-      this.setTimer(this.settingsService.getTimerProperties());
       this.intervalTypeChange.emit(this.isWorkInterval);
+      this.setTimer(this.settingsService.getTimerProperties());
     }
     else if(this.timer.seconds == 0){
       this.timer.seconds = 60;
@@ -87,8 +90,8 @@ export class TimerService {
   decrementRestTimer(){
     if(this.timer.rest_seconds == 0 && this.timer.rest_minutes ==0){
       this.setWorkInterval(true);
-      this.setTimer(this.settingsService.getTimerProperties());
       this.intervalTypeChange.emit(this.isWorkInterval);
+      this.setTimer(this.settingsService.getTimerProperties());
     }
     else if(this.timer.rest_seconds == 0){
       this.timer.rest_seconds = 60;

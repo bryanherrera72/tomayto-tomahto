@@ -12,6 +12,7 @@ import { SettingsService } from './services/settings/settings.service';
 import { TrackerService } from './services/tracker/tracker.service';
 import { AlertService } from './services/alert/alert.service';
 
+
 import {RouterModule, Routes} from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
@@ -45,7 +46,7 @@ const routes: Routes = [
     MatButtonModule,
     MatIconModule
   ],
-  providers: [SettingsService, TimerService, TrackerService,AlertService],
+  providers: [AlertService,SettingsService, TimerService,  TrackerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

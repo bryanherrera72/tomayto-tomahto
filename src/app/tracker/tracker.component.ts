@@ -35,7 +35,6 @@ export class TrackerComponent implements OnInit{
     
     this.trackerService.timerSubject.subscribe(
       (timer: Timer) => {
-        console.log(timer);
         this.displayTimer = timer;
       }
     );
@@ -47,7 +46,6 @@ export class TrackerComponent implements OnInit{
     );
     this.timerService.intervalTypeChange.subscribe(
       (type:boolean)=>{
-        console.log(type);
         this.isWorkInterval = type;
       }
     );
